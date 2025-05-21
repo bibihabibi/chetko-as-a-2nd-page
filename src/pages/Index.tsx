@@ -1,13 +1,52 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect } from 'react';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import Mission from '@/components/Mission';
+import Members from '@/components/Members';
+import Stories from '@/components/Stories';
+import Initiatives from '@/components/Initiatives';
+import Team from '@/components/Team';
+import ContactCTA from '@/components/ContactCTA';
+import Footer from '@/components/Footer';
 
 const Index = () => {
+  useEffect(() => {
+    // Scroll animation observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    return () => {
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.unobserve(el);
+      });
+    };
+  }, []);
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Mission />
+        <Members />
+        <Stories />
+        <Initiatives />
+        <Team />
+        <ContactCTA />
+      </main>
+      <Footer />
+    </>
   );
 };
 
