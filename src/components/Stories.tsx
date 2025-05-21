@@ -6,7 +6,7 @@ interface StoryCardProps {
   company: string;
   description: string;
   image: string;
-  video?: string;
+  video?: boolean; // Changed from string to boolean
   quote?: string;
   author?: string;
 }
