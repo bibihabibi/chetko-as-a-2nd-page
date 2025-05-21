@@ -26,10 +26,30 @@ const Index = () => {
       observer.observe(el);
     });
 
+    // Smooth scrolling for all anchor links
+    const handleSmoothScroll = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash && link.hash.startsWith('#') && link.href.includes(window.location.pathname)) {
+        e.preventDefault();
+        const targetId = link.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          history.pushState(null, '', link.hash);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleSmoothScroll);
+
     return () => {
       document.querySelectorAll('.animate-on-scroll').forEach(el => {
         observer.unobserve(el);
       });
+      document.removeEventListener('click', handleSmoothScroll);
     };
   }, []);
   
